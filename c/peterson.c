@@ -46,7 +46,7 @@ int main(void)
     pthread_join(ntid_0,NULL);
     pthread_join(ntid_1,NULL);
 
-    printf("count count:%d\n", count);
+    printf("count count:%d\n", count); // something wrong, not always right
 
     return 0;
  }
