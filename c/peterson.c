@@ -5,7 +5,7 @@
 
 bool flag[2];
 int turn;
-int count;
+volatile int count;
 
 void enter(int process_id) {
     flag[process_id] = true;
