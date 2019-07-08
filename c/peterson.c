@@ -3,8 +3,8 @@
 #include <stdbool.h>
 #include <pthread.h>
 
-bool flag[2];
-int turn;
+volatile bool flag[2];
+volatile int turn;
 volatile int count;
 
 void enter(int process_id) {

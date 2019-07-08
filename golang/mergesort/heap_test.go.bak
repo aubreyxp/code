@@ -1,0 +1,48 @@
+package main
+func main() {
+	rand.Seed(time.Now().Unix())
+	//valueList := []int{100, 24, 700, 599, 3, 9, 19, 35, 78}
+	elemList := []Elem{}
+	for i := 0; i < 100; i++ {
+		r := int64(rand.Int())
+		e := Elem{
+			value: r,
+			mark:  i,
+		}
+		elemList = append(elemList, e)
+	}
+	/*
+		for i := 0; i < len(valueList); i++ {
+			e := Elem{
+				value: valueList[i],
+				mark:  i,
+			}
+			elemList = append(elemList, e)
+		}
+	*/
+	m := NewMinHeap(elemList)
+	if ok := m.checkMinhp(); !ok {
+		fmt.Println("new heap wrong!")
+		return
+	}
+	sort.Slice(elemList, func(i, j int) bool { return elemList[i].value < elemList[j].value })
+	fmt.Println(elemList)
+	for i := 0; i < len(elemList); i++ {
+		ok, value := m.Delete()
+		if !ok {
+			fmt.Println("delete wrong")
+			return
+		}
+		if value != elemList[i] {
+			fmt.Println("value wrong", "i:", i)
+			fmt.Println("value:", value)
+			fmt.Println("elemList[i]:", elemList[i:])
+			fmt.Println("elemList[i]:", elemList[i])
+			return
+		} else {
+			fmt.Println(" value:", value)
+		}
+	}
+
+	fmt.Println("success!!")
+}
