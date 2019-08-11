@@ -11,12 +11,12 @@ import (
 )
 
 func testDataScale() ([]DataSize, []int) {
-	/* TODO
 	dataSize := []DataSize{1 * MB, 10 * MB, 100 * MB, 500 * MB, 1 * GB}
 	nMapFiles := []int{5, 10, 20, 40, 60}
+	/*
+		dataSize := []DataSize{1 * MB}
+		nMapFiles := []int{5}
 	*/
-	dataSize := []DataSize{1 * MB}
-	nMapFiles := []int{5}
 	return dataSize, nMapFiles
 }
 
@@ -81,7 +81,7 @@ func testURLTop(t *testing.T, rounds RoundsArgs) {
 				fmt.Println(jobName)
 				ch := mr.Submit(jobName, prefix, r.MapFunc, r.ReduceFunc, inputFiles, r.NReduce)
 				inputFiles = <-ch
-				fmt.Println("infputFiles:", inputFiles)
+				//fmt.Println("infputFiles:", inputFiles)
 			}
 			cost := time.Since(begin)
 

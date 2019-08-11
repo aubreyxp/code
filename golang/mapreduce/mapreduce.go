@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"encoding/json"
-	"fmt"
 	"hash/fnv"
 	"io"
 	"io/ioutil"
@@ -111,7 +110,7 @@ func (c *MRCluster) worker() {
 					SafeClose(fs[i], bs[i])
 				}
 			} else {
-				// 从每个map分区获取对应reduce数据, 搜集各个key的结果到map
+				// 从每个map分区获取对应reduce数据, 搜集各个key的结果到map, 注意这里是去拉各个map的分区结果
 				reduceMp := map[string][]string{}
 				for i := 0; i < t.nMap; i++ {
 
@@ -183,8 +182,6 @@ func (c *MRCluster) run(jobName, dataDir string, mapF MapF, reduceF ReduceF, map
 	for _, t := range tasks {
 		t.wg.Wait()
 	}
-
-	fmt.Println("map done !!!!!!")
 
 	// reduce phase
 	// YOUR CODE HERE :D
