@@ -7,4 +7,6 @@
 * 修改aubreycron里面脚本的实际放置路径 
 * 修改s3-monitor-check.sh和s3-monitor-upload.sh里面endpoint和bucket变量的值
 * sh 里面设置aws的路径 
-* 查看如果没有crontab才能执行crontab aubreycron, 否则-e 
+* 查看如果没有crontab才能执行crontab aubreycron, 否则-e添加到最后
+* 添加邮件告警通知人员: /data/niki/send_email/users.aubrey 
+* 添加短信告警通知人员: http://umon-ops.ucloudadmin.com/alarmp/contact 组id:385 

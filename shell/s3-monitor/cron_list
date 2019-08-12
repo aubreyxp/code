@@ -1,4 +1,4 @@
-#TODO:修改为实际的脚本地址
+#:修改为实际的脚本地址
 ## cront: 一个小时check down_check一次, 对应一个小时check log一次
 00 * * * * sh /data/hk_s3_wave_test/s3-monitor/s3-monitor-check.sh down_check >> /data/hk_s3_wave_test/s3-monitor/log/cront_down_check.log 2>&1
 05 * * * * sh /data/hk_s3_wave_test/s3-monitor/log-monitor.sh down_check H >> /data/hk_s3_wave_test/s3-monitor/log/cront_down_check.log 2>&1
@@ -9,10 +9,8 @@
 * * * * * sh /data/hk_s3_wave_test/s3-monitor/s3-monitor-upload.sh >> /data/hk_s3_wave_test/s3-monitor/log/cront_upload.log 2>&1
 * * * * * sh /data/hk_s3_wave_test/s3-monitor/log-monitor.sh upload M >> /data/hk_s3_wave_test/s3-monitor/log/cront_upload.log 2>&1
 
-## test aws
-#* * * * * ~/.local/bin/aws  --version >> /home/aubrey/s3-monitor/log/cront_aws.log
-### 检查服务是否存活
+
+## 检查服务是否存活 
 * * * * * sh /data/hk_s3_wave_test/s3-monitor/service-alive-check.sh upload >> /data/hk_s3_wave_test/s3-monitor/log/cront_upload_alive.log 2>&1
 * * * * * sh /data/hk_s3_wave_test/s3-monitor/service-alive-check.sh list_check >> /data/hk_s3_wave_test/s3-monitor/log/cront_list_alive.log 2>&1
 * * * * * sh /data/hk_s3_wave_test/s3-monitor/service-alive-check.sh down_check >> /data/hk_s3_wave_test/s3-monitor/log/cront_down_alive.log 2>&1
-

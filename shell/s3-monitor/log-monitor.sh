@@ -21,10 +21,13 @@ fi
 
 if [[ $grep_op == "down_check" ]];then
   log_file_prefix="./log/down_check/s3_check_" 
+  max_interval=7200
 elif [[ $grep_op == "list_check" ]];then
   log_file_prefix="./log/list_check/s3_check_"
+  max_interval=7200
 elif [[ $grep_op == "upload" ]];then
   log_file_prefix="./log/upload/s3_upload_"
+  max_interval=120
 fi
 suffix=`date  +%Y_%m`
 search_file="$log_file_prefix$suffix.log"
@@ -40,15 +43,14 @@ else
 fi
 #echo $time_grep
 
-# 发短信
+# 如果有错发短信
 #url="http://172.18.181.129:8008/zabbix_ops/monitor/send_alart?content=jifefe&group=385&type=13"
 grep -s "$time_grep" "$search_file" |grep -s error|grep -s $grep_op | while read line; do
     echo "$line"
-    cont="err_haikang_s3_$grep_op"
+    cont="hk_s3_wave_test_error_$grep_op"
     url="http://172.18.181.129:8008/zabbix_ops/monitor/send_alart?content=$cont&group=385&type=13"
     curl  "$url"
-    python /data/niki/send_email/aubrey.py "$line" 
+    #python /data/niki/send_email/aubrey.py "$line" 
+	python /data/niki/send_email/hk_wave_test.py "hk_s3_wave_test_error_$grep_op" "$line"
 done
-
-# 发邮件
 
