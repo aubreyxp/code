@@ -11,12 +11,12 @@ import (
 )
 
 func testDataScale() ([]DataSize, []int) {
-	dataSize := []DataSize{1 * MB, 10 * MB, 100 * MB, 500 * MB, 1 * GB}
-	nMapFiles := []int{5, 10, 20, 40, 60}
 	/*
-		dataSize := []DataSize{1 * MB}
-		nMapFiles := []int{5}
+		dataSize := []DataSize{1 * MB, 10 * MB, 100 * MB, 500 * MB, 1 * GB}
+		nMapFiles := []int{5, 10, 20, 40, 60}
 	*/
+	dataSize := []DataSize{10 * MB}
+	nMapFiles := []int{5}
 	return dataSize, nMapFiles
 }
 
