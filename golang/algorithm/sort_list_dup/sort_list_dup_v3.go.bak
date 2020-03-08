@@ -1,0 +1,67 @@
+package main
+
+import "fmt"
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func deleteDuplicates(head *ListNode) *ListNode {
+	if head == nil {
+		return nil
+	}
+
+	var retList *ListNode
+	var lastNode *ListNode
+
+	cur := head
+	for cur != nil {
+
+		count := 0
+		for cur.Next != nil && cur.Next.Val == cur.Val {
+			cur = cur.Next
+			count++
+		}
+
+		tmp := cur.Next
+		if count == 0 {
+			fmt.Println("count 0:", cur.Val)
+			if lastNode == nil {
+				retList = cur
+				lastNode = cur
+			} else {
+				lastNode.Next = cur
+				lastNode = cur
+				//fmt.Println("last value:", lastNode.Val)
+			}
+			lastNode.Next = nil
+		}
+
+		cur = tmp
+
+	}
+
+	return retList
+}
+
+func main() {
+	n5 := ListNode{
+		Val: 2,
+	}
+	n6 := ListNode{
+		Val:  2,
+		Next: &n5,
+	}
+	n7 := ListNode{
+		Val:  1,
+		Next: &n6,
+	}
+
+	h := deleteDuplicates(&n7)
+	cur := h
+	for cur != nil {
+		fmt.Println(cur.Val)
+		cur = cur.Next
+	}
+}

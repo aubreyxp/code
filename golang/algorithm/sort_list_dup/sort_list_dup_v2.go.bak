@@ -1,0 +1,89 @@
+package main
+
+import "fmt"
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func deleteDuplicates(head *ListNode) *ListNode {
+	if head == nil {
+		return nil
+	}
+
+	var retList *ListNode
+	var lastNode *ListNode
+	preValue := head.Val
+	cur := head.Next
+	if head.Next == nil {
+		return head
+	} else {
+		if head.Val != head.Next.Val {
+			retList = &ListNode{
+				Val: head.Val,
+			}
+			lastNode = retList
+		}
+	}
+
+	for cur != nil {
+		var node *ListNode
+
+		if cur.Val != preValue && (cur.Next != nil && cur.Val != cur.Next.Val) {
+			node = &ListNode{
+				Val: cur.Val,
+			}
+		}
+
+		if cur.Val != preValue && cur.Next == nil {
+			node = &ListNode{
+				Val: cur.Val,
+			}
+		}
+
+		preValue = cur.Val
+		cur = cur.Next
+
+		if node != nil {
+			fmt.Println("node:", node.Val)
+			if retList == nil {
+				retList = node
+			} else {
+				lastNode.Next = node
+			}
+			lastNode = node
+		}
+	}
+
+	return retList
+}
+
+func main() {
+	n1 := ListNode{
+		Val: 3,
+	}
+	n2 := ListNode{
+		Val:  2,
+		Next: &n1,
+	}
+	n3 := ListNode{
+		Val:  1,
+		Next: &n2,
+	}
+	n4 := ListNode{
+		Val:  1,
+		Next: &n3,
+	}
+	n5 := ListNode{
+		Val:  1,
+		Next: &n4,
+	}
+
+	h := deleteDuplicates(&n5)
+	cur := h
+	for cur != nil {
+		fmt.Println(cur.Val)
+		cur = cur.Next
+	}
+}

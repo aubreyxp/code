@@ -1,0 +1,218 @@
+package main
+
+import "fmt"
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func getFirstNoDupNode(head *ListNode) *ListNode {
+	if head == nil {
+		return nil
+	}
+
+	cur := head
+	preValue := head.Val
+
+	if head.Next != nil {
+		if head.Val != head.Next.Val {
+			return head
+		} else {
+			cur = head.Next
+			preValue = head.Val
+		}
+	} else {
+		return head
+	}
+
+	for cur != nil {
+		if cur.Val != preValue && (cur.Next != nil && cur.Val != cur.Next.Val) {
+			return cur
+		}
+
+		if cur.Val != preValue && cur.Next == nil {
+			return cur
+		}
+
+		preValue = cur.Val
+		cur = cur.Next
+	}
+
+	return cur
+
+}
+
+func deleteDuplicates(head *ListNode) *ListNode {
+	if head == nil {
+		return nil
+	}
+
+	var firstNode *ListNode
+
+	cur := head
+	preValue := head.Val
+
+	if head.Next != nil {
+		if head.Val != head.Next.Val {
+			firstNode = head
+		} else {
+			cur = head.Next
+			preValue = head.Val
+		}
+	} else {
+		firstNode = head
+	}
+
+	for cur != nil {
+		if cur.Val != preValue && (cur.Next != nil && cur.Val != cur.Next.Val) {
+			firstNode = cur
+		}
+
+		if cur.Val != preValue && cur.Next == nil {
+			firstNode = cur
+		}
+
+		preValue = cur.Val
+		cur = cur.Next
+	}
+
+	pre1 := firstNode
+	next1 := firstNode.Next
+
+	for next1 != nil {
+		f := getFirstNoDupNode(next)
+		//fmt.Println("next value", f.Val)
+		pre.Next = f
+		if f == nil {
+			break
+		} else {
+			pre = f
+			next = f.Next
+		}
+
+		if head == nil {
+			return nil
+		}
+
+		cur := head
+		preValue := head.Val
+
+		if head.Next != nil {
+			if head.Val != head.Next.Val {
+				return head
+			} else {
+				cur = head.Next
+				preValue = head.Val
+			}
+		} else {
+			return head
+		}
+
+		for cur != nil {
+			if cur.Val != preValue && (cur.Next != nil && cur.Val != cur.Next.Val) {
+				return cur
+			}
+
+			if cur.Val != preValue && cur.Next == nil {
+				return cur
+			}
+
+			preValue = cur.Val
+			cur = cur.Next
+		}
+	}
+
+	return head
+
+}
+
+/*
+func deleteDuplicates(head *ListNode) *ListNode {
+
+	if head == nil {
+		return head
+	}
+
+	if head.Next == nil {
+		return head
+	}
+
+	var ret *ListNode
+	if head.Val != head.Next.Val {
+		ret = head
+	}
+
+	cur := head.Next
+	preValue := head.Val
+	for cur != nil {
+		if cur.Val == preValue {
+			cur = cur.Next
+		}
+	}
+}
+*/
+
+// 思路: 循环获取第一个不重复的元素, 拼接起来; 优点: 比遍历要好理解一些; 时间复杂度: O(n)
+/*
+func deleteDuplicates(head *ListNode) *ListNode {
+
+	head = getFirstNoDupNode(head)
+
+	//fmt.Println("head value", head.Val, "head next:", head.Next.Val)
+
+	pre := head
+	next := head.Next
+
+	for next != nil {
+		f := getFirstNoDupNode(next)
+		//fmt.Println("next value", f.Val)
+		pre.Next = f
+		if f == nil {
+			break
+		} else {
+			pre = f
+			next = f.Next
+		}
+	}
+
+	return head
+}
+*/
+
+func main() {
+	n1 := ListNode{
+		Val: 5,
+	}
+	n2 := ListNode{
+		Val:  4,
+		Next: &n1,
+	}
+	n3 := ListNode{
+		Val:  4,
+		Next: &n2,
+	}
+	n4 := ListNode{
+		Val:  3,
+		Next: &n3,
+	}
+	n5 := ListNode{
+		Val:  3,
+		Next: &n4,
+	}
+	n6 := ListNode{
+		Val:  2,
+		Next: &n5,
+	}
+	n7 := ListNode{
+		Val:  1,
+		Next: &n6,
+	}
+
+	h := deleteDuplicates(&n7)
+	cur := h
+	for cur != nil {
+		fmt.Println(cur.Val)
+		cur = cur.Next
+	}
+}

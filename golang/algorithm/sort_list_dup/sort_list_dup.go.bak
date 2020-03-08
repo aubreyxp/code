@@ -1,0 +1,124 @@
+package main
+
+import "fmt"
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+// 这里的isFirst表示是否是第一次调用, 如果第一次调用, preValue不起作用. (换句话说:第一次不需要和前面节点比较)
+func getFirstNoDupNode(head *ListNode) *ListNode {
+	if head == nil {
+		return nil
+	}
+
+	cur := head
+	preValue := head.Val
+
+	if head.Next != nil {
+		if head.Val != head.Next.Val {
+			return head
+		} else {
+			cur = head.Next
+			preValue = head.Val
+		}
+	} else {
+		return head
+	}
+
+	for cur != nil {
+		if cur.Val != preValue && (cur.Next != nil && cur.Val != cur.Next.Val) {
+			return cur
+		}
+
+		if cur.Val != preValue && cur.Next == nil {
+			return cur
+		}
+
+		preValue = cur.Val
+		cur = cur.Next
+	}
+
+	return cur
+
+}
+
+// 这里的isFirst表示是否是第一次调用, 如果第一次调用, preValue不起作用. (换句话说:第一次不需要和前面节点比较)
+/*
+func getFirstNoDupNode(head *ListNode, preValue int, isFirst bool) *ListNode {
+	if head == nil {
+		return nil
+	}
+
+	if preValue == head.Val && isFirst == false {
+		return getFirstNoDupNode(head.Next, head.Val, false)
+	}
+
+	if head.Next == nil {
+		return head
+	}
+
+	if head.Next.Val != head.Val {
+		return head
+	} else {
+		return getFirstNoDupNode(head.Next.Next, head.Val, false)
+	}
+}
+*/
+
+// 思路: 循环获取第一个不重复的元素, 拼接起来; 优点: 比遍历要好理解一些; 时间复杂度: O(n)
+func deleteDuplicates(head *ListNode) *ListNode {
+
+	head = getFirstNoDupNode(head, head.Val, true)
+
+	//fmt.Println("head value", head.Val, "head next:", head.Next.Val)
+
+	pre := head
+	preValue := head.Val
+	next := head.Next
+
+	for next != nil {
+		f := getFirstNoDupNode(next, preValue, false)
+		//fmt.Println("next value", f.Val)
+		pre.Next = f
+		if f == nil {
+			break
+		} else {
+			preValue = f.Val
+			pre = f
+			next = f.Next
+		}
+	}
+
+	return head
+}
+
+func main() {
+	n1 := ListNode{
+		Val: 3,
+	}
+	n2 := ListNode{
+		Val:  2,
+		Next: &n1,
+	}
+	n3 := ListNode{
+		Val:  1,
+		Next: &n2,
+	}
+	n4 := ListNode{
+		Val:  1,
+		Next: &n3,
+	}
+	n5 := ListNode{
+		Val:  1,
+		Next: &n4,
+	}
+
+	h := deleteDuplicates(&n5)
+	cur := h
+	for cur != nil {
+		fmt.Println(cur.Val)
+		cur = cur.Next
+	}
+}
